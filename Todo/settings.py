@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -127,3 +132,4 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

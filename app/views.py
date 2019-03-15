@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import  TaskForm
-from django.http import HttpResponse,HttpResponseNotFound
+from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from .models import Task
@@ -24,7 +24,7 @@ def add_task(request):
             task = form.save(commit=False)
             task.user = request.user
             task.save()
-            return redirect('home')
+            return redirect('schedule')
     else:
         form = TaskForm()
     return render(request, 'add_task.html', {'form':form})
@@ -48,4 +48,20 @@ def update_task(request, task_id=None):
             entry.date_time = form.cleaned_data['date_time']
             entry.task = form.cleaned_data['task']
             entry.save()
-            return redirect('home')
+            return redirect('schedule')
+
+@login_required
+def display_schedule(request):
+    tasks = Task.objects.filter(user=request.user)
+    return render(request,'schedule.html',{'tasks':tasks})
+
+def mark_completed(request,task_id=None):
+    task = Task.objects.get(pk=task_id)
+    task.completed = True
+    task.save()
+    return redirect('schedule')
+
+def delete_task(request,task_id=None):
+    task = Task.objects.get(pk=task_id)
+    task.delete()
+    return redirect('schedule')
