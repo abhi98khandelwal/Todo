@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from app.views import SignUp
+from app.views import SignUp,add_task,update_task
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('',TemplateView.as_view(template_name='home.html'), name='home'),
     path('signup', SignUp.as_view(), name='signup'),
+    path('add_task', add_task, name='add_task'),
+    path('update_task/<int:task_id>', update_task, name='update_task'),
 ]

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} Update the Task {% endblock %}
+{% block content %}
+    <h2>Add a Task</h2>
+    <form method="post">
+        {%  csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+<script>
+    $(function () {
+        $('.datetime-input').datetimepicker({
+            format:'YYYY-MM-DD HH:mm:ss'
+        });
+    });
+</script>
+{% endblock %}
